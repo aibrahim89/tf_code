@@ -125,6 +125,22 @@ variable "transition_2" {
   })
 }
 
+variable "transition" {
+  default = [{
+    days            = 30
+    storage_class   = "STANDARD_IA"
+  },
+  {
+    days            = 90
+    storage_class   = "GLACIER"
+  }]
+  description = "(Optional) Manages S3 bucket-level Public Access Block configuration."
+  type        = list(object({
+    days            = number
+    storage_class   = string
+  }))
+}
+
 variable "expiration" {
   default = {
     expired_object_delete_marker  = true

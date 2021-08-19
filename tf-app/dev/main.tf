@@ -23,8 +23,17 @@ module "my_s3_bucket" {
     source                  = "../modules/s3"
     bucket_name             = "modules-bucket"
 
-    transition_2            = {
-        days            = 100
+    transition          = [{
+        days            = 30
+        storage_class   = "STANDARD_IA"
+    },
+    {
+        days            = 60
+        storage_class   = "ONEZONE_IA"
+    },
+    {
+        days            = 90
         storage_class   = "GLACIER"
     }
+    ]
 }
