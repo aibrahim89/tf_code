@@ -88,17 +88,27 @@ variable "lifecycle_rule_expired_object_delete_marker" {
 }
 
 variable "lifecycle_rule" {
-  default = {
-    id                                        = "RP-3-months"
-    enabled                                   = true
-    abort_incomplete_multipart_upload_days    = 2
-  }
   description = "(Optional) Manages S3 bucket-level Public Access Block configuration."
-  type        = object({
+  type        = list(object({
     id                                        = string
     enabled                                   = bool
     abort_incomplete_multipart_upload_days    = number
-  })
+    expiration_inputs = list(object({
+      expired_object_delete_marker = bool
+    }))
+    transition_inputs = list(object({
+      days          = number
+      storage_class = string
+    }))
+    noncurrent_version_transition_inputs = list(object({
+      days          = number
+      storage_class = string
+    }))
+    noncurrent_version_expiration_inputs = list(object({
+      days = number
+    }))
+  }))
+  default = null
 }
 
 variable "transition_1" {
