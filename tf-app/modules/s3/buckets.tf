@@ -18,7 +18,7 @@ resource "aws_s3_bucket" "this" {
     enabled = var.lifecycle_rule.enabled
     abort_incomplete_multipart_upload_days = var.lifecycle_rule.abort_incomplete_multipart_upload_days
 
-    transition {
+    /* transition {
       days          = var.transition_1.days
       storage_class = var.transition_1.storage_class
     }
@@ -26,7 +26,17 @@ resource "aws_s3_bucket" "this" {
     transition {
       days          = var.transition_2.days
       storage_class = var.transition_2.storage_class
-    }
+    } */
+
+    dynamic "transition" {
+        for_each = lookup(lifecycle_rule.value, "transition", [])
+
+        content {
+          date          = lookup(transition.value, "date", null)
+          days          = lookup(transition.value, "days", null)
+          storage_class = transition.value.storage_class
+        }
+      }
 
     expiration {
       expired_object_delete_marker = var.expiration.expired_object_delete_marker
