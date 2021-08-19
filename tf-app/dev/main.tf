@@ -73,15 +73,7 @@ module "aws_s3_bucket" {
         {
           days          = 30
           storage_class = "STANDARD_IA"
-        },
-        {
-          days          = 60
-          storage_class = "ONEZONE_IA"
-        },
-        {
-          days          = 90
-          storage_class = "GLACIER"
-        },
+        }
     ]
     noncurrent_version_transition_inputs = []
     noncurrent_version_expiration_inputs = []
