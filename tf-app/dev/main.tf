@@ -22,4 +22,9 @@ module "my_ec2" {
 module "my_s3_bucket" {
     source                  = "../modules/s3"
     bucket_name             = "modules-bucket"
+
+    transition_2            = {
+        days            = 100
+        storage_class   = "GLACIER"
+    }
 }

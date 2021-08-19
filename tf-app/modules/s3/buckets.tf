@@ -14,23 +14,22 @@ resource "aws_s3_bucket" "this" {
   }
 
   lifecycle_rule {
-    id      = var.lifecycle_rule_name
-    enabled = var.lifecycle_rule_enable
-
-    abort_incomplete_multipart_upload_days = var.lifecycle_rule_abort_incomplete_multipart_upload_days
+    id      = var.lifecycle_rule.id
+    enabled = var.lifecycle_rule.enabled
+    abort_incomplete_multipart_upload_days = var.lifecycle_rule.abort_incomplete_multipart_upload_days
 
     transition {
-      days          = var.lifecycle_rule_transition1_days
-      storage_class = var.lifecycle_rule_storage_class1 
+      days          = var.transition_1.days
+      storage_class = var.transition_1.storage_class
     }
 
     transition {
-      days          = var.lifecycle_rule_transition2_days
-      storage_class = var.lifecycle_rule_storage_class2
+      days          = var.transition_2.days
+      storage_class = var.transition_2.storage_class
     }
 
     expiration {
-      expired_object_delete_marker = var.lifecycle_rule_expired_object_delete_marker
+      expired_object_delete_marker = var.expiration.expired_object_delete_marker
     }
   }
 

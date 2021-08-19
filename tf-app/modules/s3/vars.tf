@@ -86,3 +86,51 @@ variable "lifecycle_rule_expired_object_delete_marker" {
   description = "(mandatory, Default:true) A boolean that indicates the deletion of the expired object delet marker"
   type        = bool
 }
+
+variable "lifecycle_rule" {
+  default = {
+    id                                        = "RP-3-months"
+    enabled                                   = true
+    abort_incomplete_multipart_upload_days    = 2
+  }
+  description = "(Optional) Manages S3 bucket-level Public Access Block configuration."
+  type        = object({
+    id                                        = string
+    enabled                                   = bool
+    abort_incomplete_multipart_upload_days    = number
+  })
+}
+
+variable "transition_1" {
+  default = {
+    days            = 30
+    storage_class   = "STANDARD_IA"
+  }
+  description = "(Optional) Manages S3 bucket-level Public Access Block configuration."
+  type        = object({
+    days            = number
+    storage_class   = string
+  })
+}
+
+variable "transition_2" {
+  default = {
+    days            = 90
+    storage_class   = "GLACIER"
+  }
+  description = "(Optional) Manages S3 bucket-level Public Access Block configuration."
+  type        = object({
+    days            = number
+    storage_class   = string
+  })
+}
+
+variable "expiration" {
+  default = {
+    expired_object_delete_marker  = true
+  }
+  description = "(Optional) Manages S3 bucket-level Public Access Block configuration."
+  type        = object({
+    expired_object_delete_marker  = bool
+  })
+}
