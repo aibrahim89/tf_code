@@ -77,3 +77,25 @@ variable "expiration" {
     expired_object_delete_marker  = bool
   })
 }
+
+variable "trusted_service" { 
+  description = "(Required) AWS application (lambda, firehous, db, s3..., etc) to restrict bucket access"
+  type        = string
+}
+
+locals {
+  service = var.trusted_service
+}
+
+
+variable "principals" {
+  default = [{
+    type            = "AWS"
+    identifiers     = ["*"]
+  }]
+  description = "(Optional) List of the principals inside the iam role."
+  type        = list(object({
+    type            = string
+    identifiers     = any
+  }))
+}

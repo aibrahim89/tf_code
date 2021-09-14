@@ -8,6 +8,7 @@ resource "aws_s3_bucket" "_" {
   acl           = "private"
   tags          = var.tags
   force_destroy = var.force_destroy
+  //policy        = data.aws_iam_policy_document.kms_s3.json
 
   versioning {
     enabled = var.versioning
