@@ -23,18 +23,10 @@ module "my_s3_bucket" {
     source                  = "../modules/s3_bucket_simple"
     bucket_name             = "modules-bucket"
     trusted_service         = "lambda"
+    arn_iam_user_kms_access = "arn:aws:sts::557804530956:assumed-role/Owner/abdallah_ibrahim@goodyear.com"
 
-    transition          = [{
-        days            = 30
-        storage_class   = "STANDARD_IA"
-    },
-    {
-        days            = 60
-        storage_class   = "ONEZONE_IA"
-    },
-    {
-        days            = 90
-        storage_class   = "GLACIER"
-    }
-    ]
+    principals          = [{
+        type            = "Service"
+        identifiers     = "lambda.amazonaws.com"
+    }]
 }

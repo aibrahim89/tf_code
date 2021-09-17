@@ -1,6 +1,7 @@
 resource "aws_kms_key" "_" {
   description             = "This key is used to encrypt bucket objects"
   deletion_window_in_days = 10
+  policy                  = data.aws_iam_policy_document.kms_key_policy.json
 }
 
 resource "aws_s3_bucket" "_" {
@@ -8,7 +9,7 @@ resource "aws_s3_bucket" "_" {
   acl           = "private"
   tags          = var.tags
   force_destroy = var.force_destroy
-  //policy        = data.aws_iam_policy_document.kms_s3.json
+  //policy        = data.aws_iam_policy_document.s3_policy.json
 
   versioning {
     enabled = var.versioning
@@ -51,3 +52,4 @@ resource "aws_s3_bucket_public_access_block" "_" {
   ignore_public_acls      = var.block_public_access.ignore_public_acls
   restrict_public_buckets = var.block_public_access.restrict_public_buckets
 }
+

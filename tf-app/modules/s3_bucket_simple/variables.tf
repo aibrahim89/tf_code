@@ -91,11 +91,22 @@ locals {
 variable "principals" {
   default = [{
     type            = "AWS"
-    identifiers     = ["*"]
+    identifiers     = "*"
   }]
   description = "(Optional) List of the principals inside the iam role."
   type        = list(object({
     type            = string
-    identifiers     = any
+    identifiers     = string
   }))
+}
+
+variable "arn_iam_user_kms_access" {
+  default     = ""
+  description = "ARN for IAM user to access the kms key"
+  type        = string
+}
+
+variable account_id {
+  type = string
+  default = ""
 }
