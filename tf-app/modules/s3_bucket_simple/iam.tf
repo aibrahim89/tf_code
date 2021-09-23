@@ -158,7 +158,7 @@ data "aws_iam_policy_document" "s3_policy_read_write" {
       "kms:GenerateDataKey*",
       "kms:DescribeKey"
     ]
-    resources = ["${aws_kms_key._.arn}"]
+    resources = [aws_kms_key._.arn]
   }
 
   statement {
@@ -199,7 +199,7 @@ data "aws_iam_policy_document" "s3_policy_read_only" {
       "kms:GenerateDataKey*",
       "kms:DescribeKey"
     ]
-    resources = ["${aws_kms_key._.arn}"]
+    resources = [aws_kms_key._.arn]
   }
 
   statement {
