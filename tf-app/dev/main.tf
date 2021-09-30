@@ -34,7 +34,7 @@ module "my_s3_bucket" {
 }
 
 
-/*data "aws_iam_policy_document" "bucket_role_policy_document" {
+data "aws_iam_policy_document" "bucket_role_policy_document" {
   statement {
     actions = ["sts:AssumeRole"]
     principals {
@@ -50,16 +50,18 @@ resource "aws_iam_role" "bucket_role" {
   assume_role_policy = data.aws_iam_policy_document.bucket_role_policy_document.json
 }
 
-resource "aws_iam_role_policy" "s3readwrite" {
+resource "aws_iam_policy_attachment" "s3readwrite" {
   name   = "${var.bucket_name}-s3-read-write-policy"
-  role   = aws_iam_role.bucket_role.id
-  policy = var.use_remote_state  ? data.terraform_remote_state.this_stack[0].outputs.bucket_policy_read_write_arn : ""
+  roles   = ["${aws_iam_role.bucket_role.id}"]
+  policy_arn = module.my_s3_bucket.bucket_policy_read_write_arn
+  //var.use_remote_state  ? data.terraform_remote_state.this_stack[0].outputs.bucket_policy_read_write_arn : ""
 }
 
 
-resource "aws_iam_role_policy" "s3readonly" {
+resource "aws_iam_policy_attachment" "s3readonly" {
   name   = "${var.bucket_name}-s3-read-only-policy"
-  role   = aws_iam_role.bucket_role.id
-  policy = var.use_remote_state  ? data.terraform_remote_state.this_stack[0].outputs.bucket_policy_read_only_arn : ""
+  roles   = ["${aws_iam_role.bucket_role.id}"]
+  policy_arn = module.my_s3_bucket.bucket_policy_read_only_arn
+  //var.use_remote_state  ? data.terraform_remote_state.this_stack[0].outputs.bucket_policy_read_only_arn : ""
 }
-*/
+
