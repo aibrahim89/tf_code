@@ -19,14 +19,47 @@ module "my_ec2" {
 }*/
 
 
+
+
 module "my_s3_bucket" {
-    source                  = "../modules/s3_bucket_simple"
+    source                  = "../modules/s3_bucket_simple_v4.0.0"
     bucket_name             = "modules-bucket"
-    trusted_service         = "lambda"
+    //trusted_service         = "lambda"
     arn_iam_user_kms_access = "arn:aws:sts::557804530956:assumed-role/Owner/abdallah_ibrahim@goodyear.com"
 
-    principals          = [{
+    /*principals          = [{
         type            = "Service"
         identifiers     = "lambda.amazonaws.com"
-    }]
+    }]*/
 }
+
+
+/*data "aws_iam_policy_document" "bucket_role_policy_document" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+    effect = "Allow"
+  }
+}
+
+resource "aws_iam_role" "bucket_role" {
+  name               = "${var.bucket_name}-access-role"
+  assume_role_policy = data.aws_iam_policy_document.bucket_role_policy_document.json
+}
+
+resource "aws_iam_role_policy" "s3readwrite" {
+  name   = "${var.bucket_name}-s3-read-write-policy"
+  role   = aws_iam_role.bucket_role.id
+  policy = var.use_remote_state  ? data.terraform_remote_state.this_stack[0].outputs.bucket_policy_read_write_arn : ""
+}
+
+
+resource "aws_iam_role_policy" "s3readonly" {
+  name   = "${var.bucket_name}-s3-read-only-policy"
+  role   = aws_iam_role.bucket_role.id
+  policy = var.use_remote_state  ? data.terraform_remote_state.this_stack[0].outputs.bucket_policy_read_only_arn : ""
+}
+*/
