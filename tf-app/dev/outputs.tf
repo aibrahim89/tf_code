@@ -13,3 +13,7 @@ output "bucket_policy_read_write_arn" {
 output "bucket_policy_read_only_arn" {
   value = module.my_s3_bucket.bucket_policy_read_only_arn
 }
+
+output "target_logging_bucket_name" {
+  value = module.my_s3_bucket_log.target_logging_bucket_name
+}
